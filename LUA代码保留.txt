@@ -1,0 +1,50 @@
+function sysCall_init()
+         
+    -- Retrieve some handles:
+    --sensorHandle=sim.getObjectAssociatedWithScript(sim.handle_self)
+    sensorHandle = sim.getObjectHandle('Distance_sensor')
+    motorHandles={-1,-1,-1,-1}
+    
+        motorHandles[1]=sim.getObjectHandle('joint_front_left_wheel')
+        motorHandles[2]=sim.getObjectHandle('joint_front_right_wheel')
+        motorHandles[3]=sim.getObjectHandle('joint_back_right_wheel')
+        motorHandles[4]=sim.getObjectHandle('joint_back_left_wheel')
+    graphHandle=sim.getObjectHandle("Graph0")
+    
+end
+
+function sysCall_cleanup() 
+ 
+end 
+function sysCall_sensing() 
+    -- Read the proximity sensor:
+    result,distance=sim.readProximitySensor(sensorHandle)
+    
+    -- Add some noise (very simple here):
+    if (result>0) then
+    
+--        distance=distance+sim.getFloatParameter(sim.floatparam_rand)*0.01
+        if (distance<0) then
+            distance=0
+        end
+        if (distance>0) then
+            if (distance<0.9) then
+                sim.setJointTargetVelocity(motorHandles[1],10)
+                sim.setJointTargetVelocity(motorHandles[2],-1)
+                sim.setJointTargetVelocity(motorHandles[3],-1)
+                sim.setJointTargetVelocity(motorHandles[4],10)
+            end
+            if (distance>1.1) then
+                sim.setJointTargetVelocity(motorHandles[1],1)
+                sim.setJointTargetVelocity(motorHandles[2],-1)
+                sim.setJointTargetVelocity(motorHandles[3],-1)
+                sim.setJointTargetVelocity(motorHandles[4],1)
+            end
+        end
+
+            
+        -- Add the data to the graph:
+        sim.setGraphUserData(graphHandle,"sensorWithNoise",distance)
+    
+    end
+end 

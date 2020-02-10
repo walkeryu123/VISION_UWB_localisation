@@ -1,0 +1,14 @@
+        if (distance>0) then
+            if (distance<0.03) then
+                sim.setJointTargetVelocity(motorHandles[1],10)
+                sim.setJointTargetVelocity(motorHandles[2],-1)
+                sim.setJointTargetVelocity(motorHandles[3],-1)
+                sim.setJointTargetVelocity(motorHandles[4],10)
+            end
+            if (distance>0.03) then
+                sim.setJointTargetVelocity(motorHandles[1],1)
+                sim.setJointTargetVelocity(motorHandles[2],-1)
+                sim.setJointTargetVelocity(motorHandles[3],-1)
+                sim.setJointTargetVelocity(motorHandles[4],1)
+            end
+        end
