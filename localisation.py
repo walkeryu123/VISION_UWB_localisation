@@ -36,7 +36,7 @@ if clientID!=-1:
     print 'Connected to remote API server'
     print 'Vision Sensor object handling'
     res, v1 = vrep.simxGetObjectHandle(clientID, 'Cam', vrep.simx_opmode_oneshot_wait)
-    print 'Getting first image'
+    print 'Getting images'
     err, resolution, image = vrep.simxGetVisionSensorImage(clientID, v1, 0, vrep.simx_opmode_streaming)
     res, HandleTransceiver1 = vrep.simxGetObjectHandle(clientID,'Transceiver1',vrep.simx_opmode_blocking);
     res, HandleTransceiver2 = vrep.simxGetObjectHandle(clientID,'Transceiver2',vrep.simx_opmode_blocking);
